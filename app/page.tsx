@@ -1,65 +1,60 @@
-import Image from "next/image";
+"use client";
+
+// src/app/page.tsx
+import { CRTBackground } from "@/components/ui/crt-background";
+import { GlitchText } from "@/components/ui/glitch-text";
+import { motion } from "framer-motion"; // Kita pakai motion di sini buat container
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    // Container utama: Full layar, item ditengah, background hitam
+    <main className="relative flex min-h-screen flex-col items-center justify-center bg-black overflow-hidden px-4 text-center">
+      {/* Pasang Background CRT di layer paling belakang */}
+      <CRTBackground />
+
+      {/* Content Wrapper (biar ada di atas background) */}
+      <div className="relative z-10 flex flex-col items-center space-y-6">
+        {/* STATUS BADGE (Pemanis) */}
+        <div className="inline-flex items-center rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3 py-1 text-sm font-mono text-cyan-400 backdrop-blur-md">
+          <span className="mr-2 flex h-2 w-2">
+            <span className="absolute inline-flex h-2 w-2 animate-ping rounded-full bg-cyan-400 opacity-75"></span>
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-cyan-500"></span>
+          </span>
+          Status: AFK (Away From Keyboard) but Coding.
+        </div>
+
+        {/* HERO TITLE: GLITCH EFFECT */}
+        {/* Responsif: text-5xl di HP, text-7xl di tablet ke atas */}
+        <GlitchText
+          text="AGUNGSUKAAFK"
+          className="text-5xl md:text-7xl lg:text-8xl uppercase"
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+
+        {/* TAGLINE */}
+        {/* Animasi muncul pelan (fade in + naik dikit) */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.8 }} // Muncul setelah glitch text
+          className="text-lg md:text-xl text-gray-300 font-mono max-w-[600px]"
+        >
+          <span className="text-cyan-400">#1</span> programmer cipocok.
+          <br />
+          <span className="text-sm text-gray-500">
+            Menaklukkan bug sambil rebahan.
+          </span>
+        </motion.p>
+
+        {/* TEMPAT TOMBOL WAITLIST (Nanti kita isi di tahap selanjutnya) */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1 }}
+          className="mt-8 p-4 border border-dashed border-gray-700 rounded-lg text-gray-500"
+        >
+          [Coming soon: Fresh Portfolio, Tutorials, Articles, and more!]
+        </motion.div>
+      </div>
+    </main>
   );
 }
