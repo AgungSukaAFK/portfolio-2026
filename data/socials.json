@@ -1,0 +1,32 @@
+{
+  "github": {
+    "label": "GitHub",
+    "handle": "@AgungSukaAFK",
+    "url": "https://github.com/AgungSukaAFK",
+    "enabled": true
+  },
+  "email": {
+    "label": "Email",
+    "handle": "wismaagung23@gmail.com",
+    "url": "mailto:wismaagung23@gmail.com",
+    "enabled": true
+  },
+  "linkedin": {
+    "label": "LinkedIn",
+    "handle": "",
+    "url": "",
+    "enabled": false
+  },
+  "instagram": {
+    "label": "Instagram",
+    "handle": "",
+    "url": "",
+    "enabled": false
+  },
+  "youtube": {
+    "label": "YouTube",
+    "handle": "",
+    "url": "",
+    "enabled": false
+  }
+}

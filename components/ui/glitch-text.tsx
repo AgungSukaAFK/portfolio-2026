@@ -44,7 +44,7 @@ export const GlitchText = ({ text, className }: GlitchTextProps) => {
         initial="hidden"
         animate={["visible", "glitching"]} // Jalankan 2 animasi sekaligus
         className={cn(
-          "relative z-10 font-extrabold tracking-tighter text-transparent bg-clip-text bg-white",
+          "relative z-10 font-extrabold tracking-tighter text-transparent bg-clip-text bg-foreground",
           className,
         )}
       >
@@ -54,7 +54,7 @@ export const GlitchText = ({ text, className }: GlitchTextProps) => {
       {/* Layer bayangan statis untuk efek tebal retro */}
       <h1
         className={cn(
-          "absolute inset-0 z-0 font-extrabold tracking-tighter text-cyan-500 blur-[1px] opacity-50 translate-x-[2px] translate-y-[2px]",
+          "absolute inset-0 z-0 font-extrabold tracking-tighter text-accent-cyan blur-[1px] opacity-50 translate-x-0.5 translate-y-0.5",
           className,
         )}
       >
@@ -62,7 +62,7 @@ export const GlitchText = ({ text, className }: GlitchTextProps) => {
       </h1>
       <h1
         className={cn(
-          "absolute inset-0 z-0 font-extrabold tracking-tighter text-magenta-500 blur-[1px] opacity-50 translate-x-[-2px] translate-y-[-2px]",
+          "absolute inset-0 z-0 font-extrabold tracking-tighter text-accent-magenta blur-[1px] opacity-50 -translate-x-0.5 -translate-y-0.5",
           className,
         )}
       >

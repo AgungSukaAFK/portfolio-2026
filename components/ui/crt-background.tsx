@@ -5,21 +5,28 @@ import { motion } from "framer-motion";
 
 export const CRTBackground = () => {
   return (
-    <div className="pointer-events-none fixed inset-0 z-[1] h-screen w-screen overflow-hidden bg-black">
-      {/* Efek Vignette (Pinggiran gelap) */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_#000_90%)] opacity-60" />
-
-      {/* Efek Scanlines (Garis-garis TV Tabung) */}
+    <div className="pointer-events-none fixed inset-0 z-[1] h-screen w-screen overflow-hidden bg-background transition-colors duration-300">
+      {/* Efek Vignette (Pinggiran gelap/terang, mengikuti tema) */}
       <div
-        className="absolute inset-0 opacity-20"
+        className="absolute inset-0 opacity-60"
         style={{
           backgroundImage:
-            "linear-gradient(transparent 50%, rgba(0, 0, 0, 0.8) 50%)",
-          backgroundSize: "100% 4px",
+            "radial-gradient(circle at center, transparent 0%, rgb(var(--vignette-color)) 90%)",
         }}
       />
 
-      {/* Efek Noise/Semut halus yang bergerak (Opsional, pakai framer motion) */}
+      {/* Efek Scanlines (Garis-garis TV Tabung), opacity ikut tema */}
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage:
+            "linear-gradient(transparent 50%, rgba(127, 127, 127, 0.8) 50%)",
+          backgroundSize: "100% 4px",
+          opacity: "var(--scanline-opacity)",
+        }}
+      />
+
+      {/* Efek Noise/Semut halus yang bergerak */}
       <motion.div
         animate={{
           x: ["0%", "-10%", "0%"],
@@ -30,7 +37,7 @@ export const CRTBackground = () => {
           duration: 0.5,
           ease: "linear",
         }}
-        className="absolute inset-[-100%] opacity-[0.08] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"
+        className="absolute inset-[-100%] opacity-[0.08] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-difference dark:mix-blend-normal"
       />
     </div>
   );
