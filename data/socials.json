@@ -11,6 +11,12 @@
     "url": "mailto:wismaagung23@gmail.com",
     "enabled": true
   },
+  "whatsapp": {
+    "label": "WhatsApp",
+    "handle": "+62 852-1711-7840",
+    "url": "https://wa.me/6285217117840",
+    "enabled": true
+  },
   "linkedin": {
     "label": "LinkedIn",
     "handle": "",

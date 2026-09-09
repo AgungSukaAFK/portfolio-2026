@@ -15,7 +15,7 @@ import {
   SiVsco,
   SiNpm,
 } from "react-icons/si";
-import { SectionHeading } from "@/components/home/terminal-about";
+import { SectionHeading } from "@/components/ui/section-heading";
 import { cn } from "@/lib/utils";
 
 interface Tech {

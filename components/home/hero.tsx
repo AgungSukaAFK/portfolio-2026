@@ -2,10 +2,12 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, ChevronDown, FolderGit2 } from "lucide-react";
+import { ArrowRight, ChevronDown, FileText, FolderGit2 } from "lucide-react";
 import { CRTBackground } from "@/components/ui/crt-background";
 import { GlitchText } from "@/components/ui/glitch-text";
 import { useCyclingText } from "@/hooks/use-cycling-text";
+
+const CV_HREF = encodeURI("/CV Muhamad Agung Maulana.pdf");
 
 const STATUSES = [
   "AFK (Away From Keyboard) but Coding.",
@@ -74,6 +76,10 @@ export function Hero() {
               className="transition-transform duration-300 group-hover:translate-x-1"
             />
           </MagneticLink>
+          <MagneticLink href={CV_HREF} external>
+            <FileText size={15} />
+            Lihat CV
+          </MagneticLink>
           <MagneticLink href="#about">Kenalan Dulu</MagneticLink>
         </motion.div>
       </div>
@@ -99,23 +105,28 @@ function MagneticLink({
   href,
   children,
   primary,
+  external,
 }: {
   href: string;
   children: React.ReactNode;
   primary?: boolean;
+  external?: boolean;
 }) {
+  const className = primary
+    ? "group flex items-center gap-2 rounded-md border border-accent-cyan bg-accent-cyan/10 px-5 py-2.5 font-mono text-sm text-accent-cyan transition-colors hover:bg-accent-cyan hover:text-black"
+    : "group flex items-center gap-2 rounded-md border border-border px-5 py-2.5 font-mono text-sm text-foreground/80 transition-colors hover:border-foreground/40 hover:text-foreground";
+
   return (
     <motion.span whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
-      <Link
-        href={href}
-        className={
-          primary
-            ? "group flex items-center gap-2 rounded-md border border-accent-cyan bg-accent-cyan/10 px-5 py-2.5 font-mono text-sm text-accent-cyan transition-colors hover:bg-accent-cyan hover:text-black"
-            : "group flex items-center gap-2 rounded-md border border-border px-5 py-2.5 font-mono text-sm text-foreground/80 transition-colors hover:border-foreground/40 hover:text-foreground"
-        }
-      >
-        {children}
-      </Link>
+      {external ? (
+        <a href={href} target="_blank" rel="noreferrer" className={className}>
+          {children}
+        </a>
+      ) : (
+        <Link href={href} className={className}>
+          {children}
+        </Link>
+      )}
     </motion.span>
   );
 }

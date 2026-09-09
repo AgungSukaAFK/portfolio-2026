@@ -1,4 +1,5 @@
-import { Github, Instagram, Linkedin, Mail, Youtube, type LucideIcon } from "lucide-react";
+import { Github, Instagram, Linkedin, Mail, Youtube } from "lucide-react";
+import { SiWhatsapp } from "react-icons/si";
 import socialsData from "@/data/socials.json";
 
 export interface SocialEntry {
@@ -10,9 +11,14 @@ export interface SocialEntry {
 
 export type SocialKey = keyof typeof socialsData;
 
-const ICONS: Record<SocialKey, LucideIcon> = {
+// Lucide doesn't ship a WhatsApp glyph, so that one comes from react-icons —
+// both accept the same `size`/`className` props, so they drop in interchangeably.
+type SocialIcon = React.ComponentType<{ size?: number; className?: string }>;
+
+const ICONS: Record<SocialKey, SocialIcon> = {
   github: Github,
   email: Mail,
+  whatsapp: SiWhatsapp,
   linkedin: Linkedin,
   instagram: Instagram,
   youtube: Youtube,

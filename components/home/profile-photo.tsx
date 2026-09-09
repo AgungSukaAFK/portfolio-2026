@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
+const PHOTOS = ["/profile.jpg", "/profile2.jpg", "/profile3.jpg"];
+
 function useElapsedTime() {
   const [seconds, setSeconds] = useState(0);
 
@@ -17,8 +19,45 @@ function useElapsedTime() {
   return `${mm}:${ss}`;
 }
 
+/** Idles 3-5s, glitches, then swaps to the next photo mid-burst — loops forever. */
+function usePhotoCycle(count: number) {
+  const [index, setIndex] = useState(0);
+  const [glitching, setGlitching] = useState(false);
+
+  useEffect(() => {
+    let idleId: ReturnType<typeof setTimeout>;
+    let swapId: ReturnType<typeof setTimeout>;
+    let endId: ReturnType<typeof setTimeout>;
+
+    const scheduleNext = () => {
+      const idleDelay = 3000 + Math.random() * 2000;
+      idleId = setTimeout(() => {
+        setGlitching(true);
+        // swap the underlying photo mid-burst so the glitch masks the cut
+        swapId = setTimeout(() => setIndex((i) => (i + 1) % count), 220);
+        endId = setTimeout(() => {
+          setGlitching(false);
+          scheduleNext();
+        }, 520);
+      }, idleDelay);
+    };
+
+    scheduleNext();
+    return () => {
+      clearTimeout(idleId);
+      clearTimeout(swapId);
+      clearTimeout(endId);
+    };
+  }, [count]);
+
+  return { index, glitching };
+}
+
 export function ProfilePhoto() {
   const elapsed = useElapsedTime();
+  const { index, glitching } = usePhotoCycle(PHOTOS.length);
+  const src = PHOTOS[index];
+  const filename = src.slice(1);
 
   return (
     <motion.div
@@ -41,9 +80,24 @@ export function ProfilePhoto() {
         </div>
 
         {/* Photo, recolored to fit the cyan/magenta terminal palette */}
-        <div className="relative aspect-square overflow-hidden">
+        <motion.div
+          className="relative aspect-square overflow-hidden"
+          animate={
+            glitching
+              ? { x: [0, -6, 5, -8, 3, 0], skewX: [0, 6, -5, 3, 0] }
+              : { x: 0, skewX: 0 }
+          }
+          transition={{ duration: 0.52, ease: "easeInOut" }}
+        >
+          {/* Preload every frame up front so later swaps are instant */}
+          <div className="hidden" aria-hidden>
+            {PHOTOS.map((p) => (
+              <Image key={p} src={p} alt="" width={280} height={280} />
+            ))}
+          </div>
+
           <Image
-            src="/profile.jpg"
+            src={src}
             alt="AgungSukaAFK"
             fill
             sizes="280px"
@@ -54,6 +108,42 @@ export function ProfilePhoto() {
           {/* Duotone tint — this is what pulls a bright photo into the theme */}
           <div className="pointer-events-none absolute inset-0 bg-linear-to-br from-accent-cyan to-accent-magenta mix-blend-color transition-opacity duration-500 opacity-85 group-hover:opacity-50" />
           <div className="pointer-events-none absolute inset-0 bg-black/10 mix-blend-multiply" />
+
+          {/* RGB-split ghost layers — flash on only mid-glitch */}
+          <motion.div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 mix-blend-screen"
+            animate={
+              glitching
+                ? { opacity: [0, 0.7, 0, 0.5, 0], x: [0, -6, 5, -3, 0] }
+                : { opacity: 0, x: 0 }
+            }
+            transition={{ duration: 0.52, ease: "easeInOut" }}
+          >
+            <Image src={src} alt="" fill sizes="280px" className="object-cover grayscale" />
+            <div className="absolute inset-0 bg-accent-cyan mix-blend-color" />
+          </motion.div>
+          <motion.div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 mix-blend-screen"
+            animate={
+              glitching
+                ? { opacity: [0, 0.6, 0, 0.7, 0], x: [0, 6, -5, 3, 0] }
+                : { opacity: 0, x: 0 }
+            }
+            transition={{ duration: 0.52, ease: "easeInOut" }}
+          >
+            <Image src={src} alt="" fill sizes="280px" className="object-cover grayscale" />
+            <div className="absolute inset-0 bg-accent-magenta mix-blend-color" />
+          </motion.div>
+
+          {/* Quick flicker cut, like a dropped broadcast frame */}
+          <motion.div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 bg-foreground"
+            animate={glitching ? { opacity: [0, 0.4, 0, 0.25, 0] } : { opacity: 0 }}
+            transition={{ duration: 0.52, ease: "easeInOut" }}
+          />
 
           {/* Scanlines, consistent with CRTBackground */}
           <div
@@ -94,7 +184,7 @@ export function ProfilePhoto() {
               />
             ),
           )}
-        </div>
+        </motion.div>
 
         {/* Caption bar */}
         <div className="flex items-center gap-1.5 border-t border-border px-3 py-2 font-mono text-[11px] text-muted-foreground">
@@ -102,7 +192,7 @@ export function ProfilePhoto() {
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-cyan opacity-75" />
             <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent-cyan" />
           </span>
-          agungsukaafk.jpg — status: online
+          {filename} — status: online
         </div>
       </div>
     </motion.div>

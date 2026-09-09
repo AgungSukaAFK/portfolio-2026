@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { ArrowUp } from "lucide-react";
 import { getSocials } from "@/lib/socials";
 
 export function Footer() {
+  const pathname = usePathname();
   const [time, setTime] = useState<string | null>(null);
   const socials = getSocials();
 
@@ -24,6 +26,8 @@ export function Footer() {
     const id = setInterval(update, 1000);
     return () => clearInterval(id);
   }, []);
+
+  if (pathname?.startsWith("/admin")) return null;
 
   return (
     <footer className="relative z-10 border-t border-border">

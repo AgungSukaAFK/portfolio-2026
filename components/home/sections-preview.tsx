@@ -4,7 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { FolderGit2, Newspaper, GraduationCap, ArrowUpRight, type LucideIcon } from "lucide-react";
 import { TiltCard } from "@/components/ui/tilt-card";
-import { SectionHeading } from "@/components/home/terminal-about";
+import { SectionHeading } from "@/components/ui/section-heading";
 
 interface PreviewCard {
   href: string;

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Check, Copy } from "lucide-react";
 import { getSocials } from "@/lib/socials";
-import { SectionHeading } from "@/components/home/terminal-about";
+import { SectionHeading } from "@/components/ui/section-heading";
 
 export function ContactCta() {
   const [copied, setCopied] = useState(false);
