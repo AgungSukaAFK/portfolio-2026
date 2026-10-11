@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <defs>
+    <path id="a" fill-rule="evenodd" d="M6 26 13 6h6l7 20h-4.5L20 21.5h-8L10.5 26zM13.4 17.5h5.2L16 10z"/>
+  </defs>
+  <rect width="32" height="32" rx="7" fill="#0a0a0a"/>
+  <rect x=".5" y=".5" width="31" height="31" rx="6.5" fill="none" stroke="#22d3ee" stroke-opacity=".35"/>
+  <use href="#a" fill="#22d3ee" transform="translate(-1.2 0)"/>
+  <use href="#a" fill="#e879f9" transform="translate(1.2 0)"/>
+  <use href="#a" fill="#f4f4f5"/>
+</svg>

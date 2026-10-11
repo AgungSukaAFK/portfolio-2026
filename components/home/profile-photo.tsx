@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
-const PHOTOS = ["/profile.jpg", "/profile2.jpg", "/profile3.jpg"];
+const PHOTOS = ["/profile.webp", "/profile2.webp", "/profile3.webp"];
 
 function useElapsedTime() {
   const [seconds, setSeconds] = useState(0);
